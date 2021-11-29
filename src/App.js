@@ -1,24 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import CountryPage from './Pages/CountryPage';
+import WelcomePg from './Pages/WelcomePg';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import DarkModeToggle from './Components/DarkModeToggle';
+import React, { useContext } from "react";
+import { ThemeContext } from "./Contexts/ThemeContext";
 
 function App() {
+  const theme = useContext(ThemeContext);
+  const darkMode = theme.state.darkMode;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className={`App ${darkMode ? "app-dark" : "app-light"}`}>
+        <p>React Router</p>
+        <DarkModeToggle />
+        <Routes>
+          <Route path="/" element={<WelcomePg />}/>
+          <Route path="/countries" element={<CountryPage />} />
+        </Routes>
+      </div>  
+    </BrowserRouter>
   );
 }
 
